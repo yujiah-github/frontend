@@ -99,10 +99,11 @@ const ButtonBox = styled.div`
 
 //예산 설정 입력 박스
 const InputBox = styled.input`
-    border: 2px solid lightgray;
-    border-radius: 3px;
+    border: 2px solid black;
+    border-radius: 5px;
     justify-content: center;
     font-size: 20px;
+    padding: 3px;
     margin: 1em;
 `;
 
