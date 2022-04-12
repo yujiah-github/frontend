@@ -3,22 +3,21 @@ import { Link } from 'react-router-dom';
 import Palette from '../../lib/Palette';
 
 const basicButtonStyle = css`
+  text-align: center;
   color: white;
   border: none;
   background-color: transparent;
   border-radius: 4px;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
   outline: none;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   padding: 0.3rem 0.5rem 0.4rem 0.6rem;
-  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
-    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
 
   &:hover {
-    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
-      0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+    box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.2);
   }
 
   &:disabled {
@@ -29,17 +28,17 @@ const basicButtonStyle = css`
 `;
 
 const outlinedButtonStyle = css`
-  color: ${({ basicColor }) => (basicColor ? basicColor : 'black')};
-  border: ${({ basicColor }) => `1px solid ${basicColor}`};
+  color: ${({ basiccolor }) => (basiccolor ? basiccolor : 'black')};
+  border: ${({ basiccolor }) => `1px solid ${basiccolor}`};
   &:hover,
   &:active {
-    background-color: ${({ basicColor }) => basicColor};
+    background-color: ${({ basiccolor }) => basiccolor};
     color: white;
   }
 `;
 
 const containedButtonStyled = css`
-  background-color: ${({ basicColor }) => basicColor};
+  background-color: ${({ basiccolor }) => basiccolor};
   &:hover,
   &:active {
     background-color: ${({ hover }) => hover};

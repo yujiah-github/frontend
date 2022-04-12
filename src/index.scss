@@ -4,9 +4,6 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -54,14 +51,6 @@ textarea {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-}
 textarea {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -75,6 +64,14 @@ input {
   -webkit-border-radius: 0;
   border-radius: 0;
   border: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
 }
 button {
   background-color: transparent;
@@ -92,8 +89,7 @@ ul,
 li {
   list-style: none;
 }
-address,
-em {
+address {
   font-style: normal;
 }
 a {
@@ -110,6 +106,6 @@ iframe {
 mark {
   background-color: transparent;
 }
-i {
-  font-style: normal;
+main {
+  padding-top: 5rem;
 }

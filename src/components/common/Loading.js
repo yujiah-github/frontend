@@ -1,11 +1,21 @@
-import Palette from '../../lib/Palette';
 import styled from 'styled-components';
 
 const SpinnerWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  p {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
 `;
 
 const Spinner = styled.div`
@@ -86,7 +96,7 @@ const Spinner = styled.div`
   }
 `;
 
-function Loading({ mainColor }) {
+function Loading({ mainColor, text }) {
   return (
     <SpinnerWrapper>
       <Spinner color={mainColor}>
@@ -103,6 +113,7 @@ function Loading({ mainColor }) {
         <div></div>
         <div></div>
       </Spinner>
+      {text && <p>{text}</p>}
     </SpinnerWrapper>
   );
 }

@@ -1,62 +1,107 @@
-import { Link } from 'react-router-dom';
-import Palette from '../../../lib/Palette';
+import { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import Notification from './Notification';
+import ChatIcon from './ChatIcon';
+import LoginModal from '../../Login/LoginModal';
+import { logout } from '../../../modules/login';
 import styled from 'styled-components';
-import PersonIcon from '@mui/icons-material/Person';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 const StyledUserLinks = styled.ul`
   display: flex;
-  @media screen and (max-width: 1300px) {
-    position: absolute;
-    top: 1rem;
-    right: 6rem;
-    transform: translateY(45%);
-  }
+  align-items: center;
+  position: absolute;
+  right: 0;
 `;
 
 const StyledUserLink = styled.li`
-  a {
+  a,
+  button {
     display: flex;
     align-items: center;
-    font-size: 20px;
-    transition: all 0.3s ease-in-out;
-    &:hover {
-      color: ${({ hover }) => hover};
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+    &.active {
+      font-weight: bold;
     }
   }
   & + & {
     margin-left: 20px;
+  }
+  &:nth-child(3) {
+    margin-left: 25px;
+  }
+  &:last-child {
+    margin-left: 15px;
+    margin-top: 3px;
   }
   .UserLinks-icon {
     margin-right: 5px;
   }
 `;
 
-function UserLinks({ user }) {
+function UserLinks() {
+  const [show, setShow] = useState(false);
+  const { auth } = useSelector(({ login }) => login);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onLogout = () => {
+    localStorage.removeItem('TOKEN');
+    dispatch(logout());
+    navigate('/', { replace: true });
+  };
+
   return (
     <StyledUserLinks>
-      <StyledUserLink hover={Palette.gray[5]}>
-        <Link to={user ? '/mypage' : '/register'}>
-          <PersonIcon className="UserLinks-icon" />
-          {user ? '마이페이지' : '회원가입'}
-        </Link>
+      {auth && (
+        <StyledUserLink>
+          <NavLink to="/mypage">마이페이지</NavLink>
+        </StyledUserLink>
+      )}
+
+      <StyledUserLink>
+        {auth ? (
+          <button onClick={onLogout}>로그아웃</button>
+        ) : (
+          <button onClick={() => setShow(true)}>
+            <LoginRoundedIcon className="UserLinks-icon" />
+            로그인하기
+          </button>
+        )}
       </StyledUserLink>
-      <StyledUserLink hover={Palette.gray[5]}>
-        <Link to={user ? '/logout' : '/login'}>
-          {user ? (
-            <>
-              <LogoutRoundedIcon className="UserLinks-icon" />
-              로그아웃
-            </>
-          ) : (
-            <>
-              <LoginRoundedIcon className="UserLinks-icon" />
-              로그인
-            </>
-          )}
-        </Link>
-      </StyledUserLink>
+      {auth && (
+        <>
+          <StyledUserLink>
+            <Notification
+              count={2}
+              notify={[
+                {
+                  check: true,
+                  title: '모아모아 시작 뱃지를 획득했어요',
+                  category: '뱃지',
+                },
+                {
+                  check: false,
+                  title: '새로운 댓글이 달렸어요',
+                  content: '게시판 이름 혹은 글 제목: 댓글 미리보기',
+                  category: '커뮤니티',
+                },
+                {
+                  check: false,
+                  title: '새로운 메시지가 있어요',
+                  content: '닉네임 : 메시지 미리보기',
+                  category: '채팅',
+                },
+              ]}
+            />
+          </StyledUserLink>
+          <StyledUserLink>
+            <ChatIcon />
+          </StyledUserLink>
+        </>
+      )}
+      <LoginModal show={show} onClose={() => setShow(false)} />
     </StyledUserLinks>
   );
 }

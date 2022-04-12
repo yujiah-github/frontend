@@ -1,66 +1,53 @@
+import { Outlet } from 'react-router-dom';
+import Loading from '../Loading';
 import Logo from './Logo';
-import NavBtn from './NavBtn';
 import NavLinks from './NavLinks';
 import UserLinks from './UserLinks';
-import { useToggle } from '../../../hooks';
 import styled from 'styled-components';
 
-const StyledHeader = styled.header`
+const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: white;
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   z-index: 5;
+  border-bottom: 1px solid lightgray;
+  background-color: #fff;
 `;
 
-const StyledNavWrapper = styled.div`
-  width: 85vw;
+const StyledHeader = styled.header`
+  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 1rem;
-  @media screen and (max-width: 1300px) {
-    display: block;
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-  }
+  justify-content: space-between;
+  margin: 0 1.3rem;
 `;
 
 const StyledNavCenter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media screen and (max-width: 1300px) {
-    width: 100%;
-    padding: 1rem 2rem;
+  transition: all 0.2s ease-in-out;
+  z-index: 15;
+`;
+
+function Header({ loading }) {
+  if (loading) {
+    return <Loading mainColor={'black'} />;
   }
-`;
 
-const Spacer = styled.div`
-  height: 5.4rem;
-`;
-
-function Header() {
-  const [open, setOpen] = useToggle(false);
   return (
     <>
-      <StyledHeader>
-        <StyledNavWrapper>
+      <HeaderWrapper>
+        <StyledHeader>
           <StyledNavCenter>
             <Logo />
-            <NavBtn onToggle={setOpen} open={open} />
           </StyledNavCenter>
-          <NavLinks open={open} />
-          <UserLinks user={false} />
-        </StyledNavWrapper>
-      </StyledHeader>
-      <Spacer />
+          <NavLinks />
+          <UserLinks />
+        </StyledHeader>
+      </HeaderWrapper>
+      <Outlet />
     </>
   );
 }
